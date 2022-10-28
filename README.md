@@ -31,7 +31,7 @@ interface ConstructorOptions {
 const lock = new Redlock ()
 ```
 
-Example #2 - Use default redis client (ioredis) and specify client options.
+#### Example #2 - Use default redis client (ioredis) and specify client options.
 ```
 const clientOptions = {
   port: 6379, // Redis port
@@ -43,7 +43,7 @@ const clientOptions = {
 const lock = new Redlock ({ clientOptions })
 ```
 
-Example #3 - Pass in your own redis client, prefereably ioredis, but not required.
+#### Example #3 - Pass in your own redis client, prefereably ioredis, but not required.
 NOTE: This redis client must satisfy the type of ioredis's `set` method.
 ```
 import redis from 'ioredis';
@@ -60,7 +60,7 @@ const lock = new Redlock ({ redisClient })
 ```
 ---
 ### Usage
-Example #1 - Synchronous callback
+#### Example #1 - Synchronous callback
 ```
 const lock = new Redlock ();
 
@@ -73,7 +73,7 @@ const cb = (): number => {
 const lockedCb: Promise<number> = lock.withLock('KEY', cb);
 ```
 
-Example #2 - Asynchronous callback
+#### Example #2 - Asynchronous callback
 ```
 const lock = new Redlock ();
 
