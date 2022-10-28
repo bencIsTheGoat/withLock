@@ -12,17 +12,17 @@ class RedLock implements _Redlock {
 
   constructor({ clientOptions, redisClient, delay, timeout }: ConstructorOptions = {}) {
     if (clientOptions) {
-      this.redisClient = new redis (clientOptions)
+      this.redisClient = new redis (clientOptions);
     } else if (redisClient) {
-      this.redisClient = redisClient
+      this.redisClient = redisClient;
     } else {
-      throw new Error ('A redis client or redis client options must be passed to constructor')
+      this.redisClient = new redis ();
     }
     this.delay = delay || RedLock.DEFAULT_DELAY;
     this.timeout = timeout || RedLock.DEFAULT_TIMEOUT
   }
   
-  async withLock<T>(key: string, cb: (...a: unknown[]) => T): Promise<T> {
+  async withLock<T>(key: string, cb: (...a: unknown[]) => T): Promise<Awaited<T>> {
     let ok = await this.redisClient.set(key, 1, 'PX', this.timeout, 'NX');
     while (!ok) {
       await new Promise (res => setTimeout(res, this.delay));
