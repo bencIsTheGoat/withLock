@@ -31,6 +31,10 @@ class RedLock implements _Redlock {
     return await cb()
   }
 
+  async disconnect(): Promise<void> {
+    return await this.redisClient.disconnect()
+  }
+
 }
 
 export default RedLock
