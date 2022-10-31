@@ -5,17 +5,29 @@ A simple and convienient wrapper for Redlock, written in TypeScript.
 ---
 
 ### Installation
+
 ```
-npm i withLock
+npm i withlock
 ```
+
 ---
+
 ### Import
+
 ```
-import Redlock from 'withLock';
+import Redlock from 'withlock';
 ```
+OR
+```
+const Redlock = require('withlock');
+```
+
 ---
+
 ### Initialization
+
 See initialzation options below
+
 ```
 interface ConstructorOptions {
   delay?: number
@@ -25,13 +37,14 @@ interface ConstructorOptions {
 }
 ```
 
-
 #### Example #1 - Use default redis client (ioredis) and local redis instance.
+
 ```
 const lock = new Redlock ()
 ```
 
 #### Example #2 - Use default redis client (ioredis) and specify client options.
+
 ```
 const clientOptions = {
   port: 6379, // Redis port
@@ -44,7 +57,9 @@ const lock = new Redlock ({ clientOptions })
 ```
 
 #### Example #3 - Pass in your own redis client, prefereably ioredis, but not required.
+
 NOTE: This redis client must satisfy the type of ioredis's `set` method.
+
 ```
 import redis from 'ioredis';
 
@@ -58,9 +73,13 @@ const redisClient = new redis ({
 
 const lock = new Redlock ({ redisClient })
 ```
+
 ---
+
 ### Usage
+
 #### Example #1 - Synchronous callback
+
 ```
 const lock = new Redlock ();
 
@@ -74,6 +93,7 @@ const lockedCb: Promise<number> = lock.withLock('KEY', cb);
 ```
 
 #### Example #2 - Asynchronous callback
+
 ```
 const lock = new Redlock ();
 
@@ -85,7 +105,3 @@ const cb = async (): number => {
 // withLock infers return type from cb
 const lockedCb: Promise<number> = lock.withLock('KEY', cb);
 ```
-
-
-
-
