@@ -1,7 +1,3 @@
-const testFileGlobs = ['src/test-infra/*', '**/*.test.*', 'jest.*'];
-const toolFileGlobs = ['src/tools/**/*', 'src/cron/**/*'];
-const devFileGlobs = [...testFileGlobs, ...toolFileGlobs, 'esbuild.*'];
-
 module.exports = {
   ignorePatterns: ['.eslintrc.js'], // suppresses an error around typescript not covering this file
   settings: {
@@ -117,70 +113,7 @@ module.exports = {
     // There are some places these should be allowed, like some tools. We can
     // implement overrides to allow.
     '@typescript-eslint/no-var-requires': 'off',
-    'import/no-extraneous-dependencies': [
-      // this is reporting on a bunch of @types/ packages that aren't directly imported
-      'off',
-      {
-        devDependencies: devFileGlobs,
-      },
-    ],
     'prettier/prettier': 'error',
     'unused-imports/no-unused-imports': 'error',
   },
-  overrides: [
-    {
-      files: '*',
-      excludedFiles: devFileGlobs,
-
-      rules: {
-        'import/no-restricted-paths': [
-          'error',
-          {
-            zones: [
-              {
-                // Note that even though we target all of `src` here, because this is
-                // in an override block with excludedFiles, this won't apply to all files.
-                target: './',
-                from: './src/tools',
-                message: 'Tools should not be imported into business logic.',
-              },
-            ],
-          },
-        ],
-      },
-    },
-    {
-      files: testFileGlobs,
-      extends: ['plugin:jest/recommended'],
-      rules: {
-        /**
-         * ******************
-         * Additional rules.
-         * ******************
-         */
-        /**
-         * ******************
-         * Modified rules.
-         * ******************
-         */
-        // this is disabled for normal code (for now) but comes up
-        // a fair amount in tests, so we start by enabling it in them.
-        '@typescript-eslint/no-floating-promises': 'error',
-        'jest/expect-expect': 'error',
-        /**
-         * ******************
-         * Rules we don't want.
-         * ******************
-         */
-        'jest/no-commented-out-tests': 'off',
-        /**
-         * ******************
-         * Rules we might want, but are a little broken right now or require more discussion.
-         * TODO: add these ad hoc.
-         * ******************
-         */
-        'jest/no-conditional-expect': 'off', // we have some tests where we do this in a loop, with an else, which should be fine
-      },
-    },
-  ],
 };
