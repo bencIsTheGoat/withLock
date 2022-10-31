@@ -19,45 +19,45 @@ afterEach(async () => {
 });
 
 it('should setup default ioredis client correctly with no clientOptions', async () => {
-  const lock = new RedLock ()
-  const key = Math.random().toString()
-  const value = Math.random()
-  await expect(lock.redisClient.set(key, value)).resolves.toEqual("OK")
-  await lock.redisClient.disconnect()
+  const lock = new RedLock();
+  const key = Math.random().toString();
+  const value = Math.random();
+  await expect(lock.redisClient.set(key, value)).resolves.toEqual('OK');
+  await lock.redisClient.disconnect();
 });
 
 it('should setup default ioredis client correctly with clientOptions', async () => {
-  const lock = new RedLock ({ clientOptions: { port, host } })
-  const key = Math.random().toString()
-  const value = Math.random()
-  await expect(lock.redisClient.set(key, value)).resolves.toEqual("OK")
-  await lock.redisClient.disconnect()
+  const lock = new RedLock({ clientOptions: { port, host } });
+  const key = Math.random().toString();
+  const value = Math.random();
+  await expect(lock.redisClient.set(key, value)).resolves.toEqual('OK');
+  await lock.redisClient.disconnect();
 });
 
 it('should setup ioredis client correctly', async () => {
-  const redisClient = new Redis ({ host, port })
-  const lock = new RedLock ({ redisClient })
-  const key = Math.random().toString()
-  const value = Math.random()
-  await expect(lock.redisClient.set(key, value)).resolves.toEqual("OK")
-  await lock.redisClient.disconnect()
+  const redisClient = new Redis({ host, port });
+  const lock = new RedLock({ redisClient });
+  const key = Math.random().toString();
+  const value = Math.random();
+  await expect(lock.redisClient.set(key, value)).resolves.toEqual('OK');
+  await lock.redisClient.disconnect();
 });
 
 it('should ensure synchronous callback returns correct value', async () => {
-  const lock = new RedLock ({ clientOptions: { port, host } })
-  const cb = () => 1
-  const key = Math.random().toString()
-  await expect(lock.withLock(key, cb)).resolves.toEqual(1)
-  await lock.redisClient.disconnect()
+  const lock = new RedLock({ clientOptions: { port, host } });
+  const cb = () => 1;
+  const key = Math.random().toString();
+  await expect(lock.withLock(key, cb)).resolves.toEqual(1);
+  await lock.redisClient.disconnect();
 });
 
 it('should ensure asynchronous callback returns correct value', async () => {
-  const lock = new RedLock ({ clientOptions: { port, host } })
+  const lock = new RedLock({ clientOptions: { port, host } });
   const cb = async () => {
-    await new Promise (res => setTimeout(res, 100))
-    return 1
-  }
-  const key = Math.random().toString()
-  await expect(lock.withLock(key, cb)).resolves.toEqual(1)
-  await lock.redisClient.disconnect()
+    await new Promise((res) => setTimeout(res, 100));
+    return 1;
+  };
+  const key = Math.random().toString();
+  await expect(lock.withLock(key, cb)).resolves.toEqual(1);
+  await lock.redisClient.disconnect();
 });
