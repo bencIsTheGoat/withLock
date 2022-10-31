@@ -7,7 +7,7 @@ A simple and convienient wrapper for Redlock, written in TypeScript.
 ### Installation
 
 ```
-npm i withLock
+npm i withlock
 ```
 
 ---
@@ -15,7 +15,11 @@ npm i withLock
 ### Import
 
 ```
-import Redlock from 'withLock';
+import Redlock from 'withlock';
+```
+OR
+```
+const Redlock = require('withlock');
 ```
 
 ---

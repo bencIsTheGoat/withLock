@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint --fix",
-    "fmt": "prettier --write ."
+    "fmt": "prettier --write .",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
