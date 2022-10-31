@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "lint": "eslint --fix",
-    "fmt": "prettier --write .",
+    "lint": "eslint",
+    "fmt": "prettier .",
     "build": "tsc"
   },
   "keywords": [],
